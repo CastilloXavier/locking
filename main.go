@@ -26,18 +26,26 @@ func contact(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	homeView = NewView("views/home.gohtml", "views/home_banner.gohtml")
+
 	var err error
-	homeTemplate, err = template.ParseFiles("views/home.gohtml")
+	homeTemplate, err = template.ParseFiles(
+		"views/home.gohtml",
+		"views/layouts/footer.gohtml",
+	)
 	if err != nil {
 		panic(err)
 	}
 
-	contactTemplate, err = template.ParseFiles("views/contact.gohtml")
+	contactTemplate, err = template.ParseFiles(
+		"views/contact.gohtml",
+		"views/layouts/footer.gohtml",
+	)
 	if err != nil {
 		panic(err)
 	}
 	r := mux.NewRouter()
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)
-	http.ListenAndServe(":3001", r)
+	http.ListenAndServe(":3002", r)
 }
