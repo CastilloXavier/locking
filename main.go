@@ -36,7 +36,7 @@ func main() {
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)
 	r.HandleFunc("/signup", signup)
-	http.ListenAndServe(":3002", r)
+	http.ListenAndServe(":3010", r)
 }
 
 func must(err error) {

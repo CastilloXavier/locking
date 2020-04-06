@@ -1,13 +1,37 @@
 {{define "yield"}}
+
+<!--<div class="Card border-primary mb-3">
+  <div class="card-header">
+    Sign Up Now
+  </div>
+  <div class="card-body text-dark">
+    <h5 class="card-title">Special title treatment</h5>
+      {{template "signupForm"}}
+  </div>
+</div>-->
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+      <div class="card border-primary mb-3">
+        <div class="card-header">Sign Up Now</div>
+        <div class="card-body text-black">
+        {{template "signupForm"}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{{end}}
+
+{{define "signupForm"}}
 <form>
-<div class="form-group">
-  <label for="email">Email address</label>
-  <input type="email" name ="email" class="form-control" id="email" aria-describedby="emailHelp">
-</div>
-<div class="form-group">
-  <label for="password">Password</label>
-  <input type="password" name="password" class="form-control" id="password">
-</div>
-<button type="submit" class="btn btn-primary">Sign Up</button>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" name ="email" class="form-control" id="email" aria-describedby="emailHelp">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" name="password" class="form-control" id="password">
+  </div>
+  <button type="submit" class="btn btn-primary">Sign Up</button>
 </form>
 {{end}}
