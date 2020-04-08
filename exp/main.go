@@ -1,10 +1,7 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strings"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -20,9 +17,17 @@ const (
 
 type User struct {
 	gorm.Model
-	Name  string
-	Email string `gorm:"not null;unique_index"`
-	Color string
+	Name   string
+	Email  string `gorm:"not null;unique_index"`
+	Color  string
+	Orders []Order
+}
+
+type Order struct {
+	gorm.Model
+	UserID      uint
+	Amount      int
+	Description string
 }
 
 func main() {
@@ -33,36 +38,39 @@ func main() {
 		panic(err)
 	}
 	defer db.Close()
-	if err := db.DB().Ping(); err != nil {
-		panic(err)
-	}
-
-	//db.DropTableIfExists(&User{})
 	db.LogMode(true)
 	db.AutoMigrate(&User{})
 
-	name, email, color := getInfo()
-	u := User{
-		Name:  name,
-		Email: email,
-		Color: color,
+	var u User
+	//newDB := db.Where("email = ?", "blah@blah.com")
+	//newDB = newDB.Or("color = ?", "red")
+	//newDB = newDB.First(&u)
+	db = db.Where("email = ?", "blah@blah.com").First(&u)
+	if err := db.Where("email = ?", "blah@blah.com").First(&u).Error; err != nil {
+		switch err {
+		case gorm.ErrRecordNotFound:
+			fmt.Println("No user found!")
+		default:
+			panic(err)
+		}
 	}
-
-	if err = db.Create(&u).Error; err != nil {
-		panic(err)
-	}
+	fmt.Println(u)
+	/*if db.RecordNotFound() {
+		fmt.Println("No user found!")
+	} else if db.Error != nil {
+		panic(db.Error)
+	} else {
+		fmt.Println(u)
+	}*/
 }
 
-func getInfo() (name, email, color string) {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("What is your name")
-	name, _ = reader.ReadString('\n')
-	fmt.Println("What is your email address?")
-	email, _ = reader.ReadString('\n')
-	fmt.Println("What is your favourite color?")
-	color, _ = reader.ReadString('\n')
-	name = strings.TrimSpace(name)
-	email = strings.TrimSpace(email)
-	color = strings.TrimSpace(color)
-	return name, email, color
+func createOrder(db *gorm.DB, user User, amount int, desc string) {
+	err := db.Create(&Order{
+		UserID:      user.ID,
+		Amount:      amount,
+		Description: desc,
+	}).Error
+	if err != nil {
+		panic(err)
+	}
 }
