@@ -103,6 +103,8 @@ func (us *UserService) AutoMigrate() error {
 
 type User struct {
 	gorm.Model
-	Name  string
-	Email string `gorm:"not null; unique_index"`
+	Name         string
+	Email        string `gorm:"not null; unique_index"`
+	Password     string `gorm:"_"`
+	PasswordHash string `gorm:"not null"`
 }

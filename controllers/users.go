@@ -48,8 +48,9 @@ func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	user := models.User{
-		Name:  signupForm.Name,
-		Email: signupForm.Email,
+		Name:     signupForm.Name,
+		Email:    signupForm.Email,
+		Password: signupForm.Password,
 	}
 	if err := u.us.Create(&user); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
