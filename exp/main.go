@@ -23,8 +23,11 @@ func main() {
 		panic(err)
 	}
 	defer us.Close()
-	us.DestructiveReset()
+	//us.DestructiveReset()
 	user, err := us.ByID(1)
+	if err != nil {
+		panic(err)
+	}
 	/*db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)

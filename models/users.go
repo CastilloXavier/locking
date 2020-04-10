@@ -12,6 +12,7 @@ func NewUserService(connectionInfo string) (*UserService, error) {
 	if err != nil {
 		return nil, err
 	}
+	db.LogMode(true)
 	//defer db.Close()
 	return &UserService{
 		db: db,
