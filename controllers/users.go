@@ -55,5 +55,5 @@ func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
 	if err := u.us.Create(&user); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	fmt.Fprintln(w, signupForm)
+	fmt.Fprintln(w, user)
 }
