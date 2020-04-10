@@ -23,7 +23,7 @@ func main() {
 		panic(err)
 	}
 	defer us.Close()
-	us.DestructiveReset()
+
 	nuser := models.User{
 		Name:  "Jon Calhoun",
 		Email: "jonCalhoun@gmail.com",
