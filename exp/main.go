@@ -23,18 +23,28 @@ func main() {
 		panic(err)
 	}
 	defer us.Close()
-	/*us.DestructiveReset()
+	us.DestructiveReset()
 	nuser := models.User{
 		Name:  "Jon Calhoun",
 		Email: "jonCalhoun@gmail.com",
 	}
 	if err := us.Create(&nuser); err != nil {
 		panic(err)
-	}*/
-	user, err := us.ByID(1)
+	}
+	nuser.Email = "blabla@gmail.com"
+	if err := us.Update(&nuser); err != nil {
+		panic(err)
+	}
+
+	user, err := us.ByID(nuser.ID)
 	if err != nil {
 		panic(err)
 	}
+
+	if err := us.Delete(nuser.ID); err != nil {
+		panic(err)
+	}
+
 	/*db, err := gorm.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
